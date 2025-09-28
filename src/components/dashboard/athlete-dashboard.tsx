@@ -3,7 +3,7 @@
 import LiveMetricCard from './live-metric-card';
 import PeerComparisonRadarChart from '../charts/peer-comparison-radar-chart';
 import HistoricalDataChart from '../charts/historical-data-chart';
-import { HeartPulse, ShieldAlert, Zap } from 'lucide-react';
+import { HeartPulse, ShieldAlert, Zap, Droplets } from 'lucide-react';
 import { mockAnalysisResults, mockUsers } from '@/lib/mock-data';
 import { useAuth } from '@/lib/hooks';
 import { useState, useEffect } from 'react';
@@ -67,6 +67,7 @@ export default function AthleteDashboard() {
 
   const heartRateData = generateRandomData(70, 40);
   const emgData = generateRandomData(500, 300);
+  const oxygenData = generateRandomData(98, 4);
 
   return (
     <div className="grid gap-6">
@@ -100,14 +101,21 @@ export default function AthleteDashboard() {
             teammates={teammates}
             onProChange={handleProChange}
         />
-      </div>
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <HistoricalDataChart
           data={heartRateData}
           title="Heart Rate History"
           description="Your heart rate over the last 24 hours."
           dataKey="Heart Rate"
           unit="bpm"
+        />
+      </div>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <HistoricalDataChart
+          data={oxygenData}
+          title="Blood Oxygen (SpO2)"
+          description="Oxygen saturation over the last 24 hours."
+          dataKey="SpO2"
+          unit="%"
         />
         <HistoricalDataChart
             data={emgData}
