@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { User } from '@/lib/types';
 
 interface ComparisonData {
   subject: string;
@@ -14,11 +16,13 @@ interface ComparisonData {
 interface PeerComparisonRadarChartProps {
   data: ComparisonData[];
   proName?: string;
+  teammates: User[];
+  onProChange: (athleteId: string) => void;
 }
 
 type DataKey = "athlete" | "peer" | "pro";
 
-export default function PeerComparisonRadarChart({ data, proName }: PeerComparisonRadarChartProps) {
+export default function PeerComparisonRadarChart({ data, proName, teammates, onProChange }: PeerComparisonRadarChartProps) {
   const [hidden, setHidden] = useState<Record<DataKey, boolean>>({
     athlete: false,
     peer: false,
@@ -61,9 +65,22 @@ export default function PeerComparisonRadarChart({ data, proName }: PeerComparis
 
   return (
     <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
-      <CardHeader>
-        <CardTitle>Peer & Pro Comparison</CardTitle>
-        <CardDescription>Your scores vs. peers and a selected pro or teammate.</CardDescription>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <div className="space-y-1.5">
+            <CardTitle>Peer & Pro Comparison</CardTitle>
+            <CardDescription>Your scores vs. peers and a selected pro or teammate.</CardDescription>
+        </div>
+         <Select onValueChange={onProChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select a teammate..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="pro">Pro Athlete (Avg)</SelectItem>
+                {teammates.map(t => (
+                  <SelectItem key={t.uid} value={t.uid}>{t.displayName}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={350}>

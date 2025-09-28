@@ -3,12 +3,10 @@
 import LiveMetricCard from './live-metric-card';
 import PeerComparisonRadarChart from '../charts/peer-comparison-radar-chart';
 import HistoricalDataChart from '../charts/historical-data-chart';
-import { HeartPulse, ShieldAlert, Zap, Users } from 'lucide-react';
+import { HeartPulse, ShieldAlert, Zap } from 'lucide-react';
 import { mockAnalysisResults, mockUsers } from '@/lib/mock-data';
 import { useAuth } from '@/lib/hooks';
 import { useState, useEffect } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { User } from '@/lib/types';
 
 const generateRandomData = (base: number, range: number) => {
@@ -95,33 +93,13 @@ export default function AthleteDashboard() {
           colorClassName="text-orange-500"
         />
       </div>
-       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_2fr]">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Users className="h-5 w-5 text-primary" />
-              Compare Against a Teammate
-            </CardTitle>
-            <CardDescription>Select a teammate to compare your performance metrics against theirs.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Select onValueChange={handleProChange}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a teammate..." />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="pro">Pro Athlete (Avg)</SelectItem>
-                {teammates.map(t => (
-                  <SelectItem key={t.uid} value={t.uid}>{t.displayName}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </CardContent>
-        </Card>
-        <div/>
-      </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <PeerComparisonRadarChart data={comparisonData} proName={selectedPro?.displayName} />
+        <PeerComparisonRadarChart 
+            data={comparisonData} 
+            proName={selectedPro?.displayName} 
+            teammates={teammates}
+            onProChange={handleProChange}
+        />
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <HistoricalDataChart
