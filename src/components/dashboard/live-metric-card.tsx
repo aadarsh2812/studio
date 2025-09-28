@@ -13,7 +13,7 @@ interface LiveMetricCardProps {
 
 export default function LiveMetricCard({ title, value, description, Icon, colorClassName, className }: LiveMetricCardProps) {
   return (
-    <Card className={cn("shadow-md hover:shadow-lg transition-shadow duration-300", className)}>
+    <Card className={cn("shadow-md hover:shadow-lg transition-shadow duration-300 h-full", className)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
         <Icon className={`h-5 w-5 ${colorClassName}`} />

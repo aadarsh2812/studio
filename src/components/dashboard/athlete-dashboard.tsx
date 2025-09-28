@@ -3,11 +3,12 @@
 import LiveMetricCard from './live-metric-card';
 import PeerComparisonRadarChart from '../charts/peer-comparison-radar-chart';
 import HistoricalDataChart from '../charts/historical-data-chart';
-import { HeartPulse, ShieldAlert, Zap, Droplets } from 'lucide-react';
+import { HeartPulse, Zap } from 'lucide-react';
 import { mockAnalysisResults, mockUsers } from '@/lib/mock-data';
 import { useAuth } from '@/lib/hooks';
 import { useState, useEffect } from 'react';
 import { User } from '@/lib/types';
+import InjuryHotspot from '../athlete/injury-hotspot';
 
 const generateRandomData = (base: number, range: number) => {
   return Array.from({ length: 24 }, (_, i) => ({
@@ -22,7 +23,6 @@ export default function AthleteDashboard() {
     bloodPressureSystolic: 120,
     bloodPressureDiastolic: 80,
     stress: 25,
-    injuryRisk: 15,
   });
   const [selectedPro, setSelectedPro] = useState<User | null>(null);
 
@@ -34,7 +34,6 @@ export default function AthleteDashboard() {
         bloodPressureSystolic: Math.round(prev.bloodPressureSystolic + (Math.random() - 0.5) * 4),
         bloodPressureDiastolic: Math.round(prev.bloodPressureDiastolic + (Math.random() - 0.5) * 3),
         stress: Math.round(Math.max(0, Math.min(100, prev.stress + (Math.random() - 0.5) * 6))),
-        injuryRisk: Math.round(Math.max(0, Math.min(100, prev.injuryRisk + (Math.random() - 0.6) * 4))),
       }));
     }, 2000);
 
@@ -80,6 +79,7 @@ export default function AthleteDashboard() {
           description="Your current blood pressure"
           Icon={HeartPulse}
           colorClassName="text-red-500"
+          className="col-span-1"
         />
         <LiveMetricCard 
           title="Stress Level"
@@ -87,13 +87,12 @@ export default function AthleteDashboard() {
           description="Physiological stress index"
           Icon={Zap}
           colorClassName="text-yellow-500"
+           className="col-span-1"
         />
-        <LiveMetricCard 
-          title="Injury Risk"
-          value={`${liveMetrics.injuryRisk}%`}
-          description={`High-risk: ${athleteData.predictedInjuryPart}`}
-          Icon={ShieldAlert}
-          colorClassName="text-orange-500"
+        <InjuryHotspot
+          predictedInjuryPart={athleteData.predictedInjuryPart}
+          injuryRiskPercent={athleteData.injuryRiskPercent}
+          className="col-span-1"
         />
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
