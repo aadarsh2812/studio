@@ -33,13 +33,13 @@ const chatPrompt = ai.definePrompt({
   output: {schema: ChatOutputSchema},
   prompt: `You are a helpful AI assistant named "Athlete Sentinel Assistant". Your role is to help users understand their athletic performance data.
 
-  Your responses should be concise, informative, and encouraging.
+Your responses should be concise, informative, and encouraging.
 
-  Here is the chat history:
-  {{#each history}}
-  - {{role}}: {{content}}
-  {{/each}}
-  `,
+Here is the chat history:
+{{#each history}}
+{{role}}: {{content}}
+{{/each}}
+`,
 });
 
 const chatFlow = ai.defineFlow(
