@@ -80,6 +80,7 @@ export default function AthleteDashboard() {
           description="Your current blood pressure"
           Icon={HeartPulse}
           colorClassName="text-red-500"
+          className="lg:col-span-3"
         />
         <LiveMetricCard 
           title="Stress Level"
@@ -87,6 +88,7 @@ export default function AthleteDashboard() {
           description="Physiological stress index"
           Icon={Zap}
           colorClassName="text-yellow-500"
+          className="lg:col-span-1"
         />
         <LiveMetricCard 
           title="Injury Risk"
@@ -94,6 +96,7 @@ export default function AthleteDashboard() {
           description={`High-risk: ${athleteData.predictedInjuryPart}`}
           Icon={ShieldAlert}
           colorClassName="text-orange-500"
+          className="lg:col-span-2"
         />
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">

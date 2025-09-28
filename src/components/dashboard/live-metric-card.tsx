@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import type { LucideIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface LiveMetricCardProps {
   title: string;
@@ -7,11 +8,12 @@ interface LiveMetricCardProps {
   description: string;
   Icon: LucideIcon;
   colorClassName: string;
+  className?: string;
 }
 
-export default function LiveMetricCard({ title, value, description, Icon, colorClassName }: LiveMetricCardProps) {
+export default function LiveMetricCard({ title, value, description, Icon, colorClassName, className }: LiveMetricCardProps) {
   return (
-    <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
+    <Card className={cn("shadow-md hover:shadow-lg transition-shadow duration-300", className)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
         <Icon className={`h-5 w-5 ${colorClassName}`} />
