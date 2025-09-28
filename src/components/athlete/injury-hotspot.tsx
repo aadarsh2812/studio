@@ -88,9 +88,9 @@ export default function InjuryHotspot({ predictedInjuryPart, injuryRiskPercent, 
       </CardHeader>
       <CardContent className="p-2">
         <div className="grid grid-cols-3 items-center gap-4">
-            <div className="col-span-2 h-[350px]">
+            <div className="col-span-2 h-[400px]">
                 <Tabs defaultValue="front" className="w-full h-full flex flex-col">
-                    <TabsList className="grid w-full grid-cols-2 h-8">
+                    <TabsList className="grid w-full grid-cols-2 h-7">
                         <TabsTrigger value="front" className="py-1 h-full text-xs">Front</TabsTrigger>
                         <TabsTrigger value="back" className="py-1 h-full text-xs">Back</TabsTrigger>
                     </TabsList>
