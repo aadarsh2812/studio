@@ -2,6 +2,7 @@
 
 import LiveMetricCard from './live-metric-card';
 import ReadinessRadarChart from '../charts/readiness-radar-chart';
+import PeerComparisonRadarChart from '../charts/peer-comparison-radar-chart';
 import HistoricalDataChart from '../charts/historical-data-chart';
 import { HeartPulse, ShieldAlert, Zap } from 'lucide-react';
 import { mockAnalysisResults } from '@/lib/mock-data';
@@ -49,6 +50,14 @@ export default function AthleteDashboard() {
     { subject: 'Neural', score: athleteData.neuralScore, fullMark: 100 },
   ];
 
+  const comparisonData = [
+    { subject: 'Fitness', athlete: athleteData.fitnessScore, peer: 78, pro: 95 },
+    { subject: 'Stamina', athlete: athleteData.staminaScore, peer: 82, pro: 98 },
+    { subject: 'Strength', athlete: athleteData.strengthScore, peer: 75, pro: 92 },
+    { subject: 'Reflex', athlete: athleteData.reflexScore, peer: 88, pro: 96 },
+    { subject: 'Neural', athlete: athleteData.neuralScore, peer: 85, pro: 94 },
+  ];
+
   const heartRateData = generateRandomData(70, 40);
   const emgData = generateRandomData(500, 300);
 
@@ -79,6 +88,9 @@ export default function AthleteDashboard() {
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <ReadinessRadarChart data={readinessData} />
+        <PeerComparisonRadarChart data={comparisonData} />
+      </div>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <HistoricalDataChart
           data={heartRateData}
           title="Heart Rate History"
@@ -86,8 +98,6 @@ export default function AthleteDashboard() {
           dataKey="Heart Rate"
           unit="bpm"
         />
-      </div>
-      <div className="grid grid-cols-1 gap-6">
         <HistoricalDataChart
             data={emgData}
             title="EMG Muscle Activity"
