@@ -1,3 +1,52 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "athlete-1",
+      "description": "A male athlete looking focused.",
+      "imageUrl": "https://images.unsplash.com/photo-1628011327859-c8124c07e89b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYWxlJTIwYXRobGV0ZXxlbnwwfHx8fDE3NTkwMTIxNDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "male athlete"
+    },
+    {
+      "id": "athlete-2",
+      "description": "A female athlete mid-run.",
+      "imageUrl": "https://images.unsplash.com/photo-1618355281911-84e6ec751d84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZmVtYWxlJTIwYXRobGV0ZXxlbnwwfHx8fDE3NTkwMTQwNjl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "female athlete"
+    },
+    {
+      "id": "athlete-3",
+      "description": "A male athlete stretching.",
+      "imageUrl": "https://images.unsplash.com/photo-1600026453194-11ae289732b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYWxlJTIwc3RyZXRjaGluZ3xlbnwwfHx8fDE3NTkwNTYyMzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "male stretching"
+    },
+    {
+      "id": "athlete-4",
+      "description": "A female athlete with a basketball.",
+      "imageUrl": "https://images.unsplash.com/photo-1560800075-b678f97e665b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxmZW1hbGUlMjBiYXNrZXRiYWxsfGVufDB8fHx8MTc1OTA1NjIzNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "female basketball"
+    },
+    {
+      "id": "athlete-5",
+      "description": "A focused male soccer player.",
+      "imageUrl": "https://images.unsplash.com/photo-1585757318177-0570a997dc3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWFsZSUyMHNvY2NlcnxlbnwwfHx8fDE3NTkwNTYyMzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "male soccer"
+    },
+    {
+      "id": "athlete-6",
+      "description": "A female tennis player serving.",
+      "imageUrl": "https://images.unsplash.com/photo-1635542533598-fc1010d09c17?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZmVtYWxlJTIwdGVubmlzfGVufDB8fHx8MTc1OTA1NjIzNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "female tennis"
+    },
+    {
+      "id": "athlete-7",
+      "description": "A male swimmer in the pool.",
+      "imageUrl": "https://images.unsplash.com/photo-1710739513833-48b074290a8e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtYWxlJTIwc3dpbW1lcnxlbnwwfHx8fDE3NTkwNTYyMzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "male swimmer"
+    },
+    {
+      "id": "athlete-8",
+      "description": "A female yogi in a pose.",
+      "imageUrl": "https://images.unsplash.com/photo-1683338992477-c1348efe9a70?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxmZW1hbGUlMjB5b2dhfGVufDB8fHx8MTc1OTA1NjIzNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "female yoga"
+    }
+  ]
 }
