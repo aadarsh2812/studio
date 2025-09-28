@@ -37,6 +37,7 @@ export default function AthleteDetailPage() {
   
   const heartRateData = generateRandomData(70, 40);
   const energyData = generateRandomData(80, 20);
+  const emgData = generateRandomData(500, 300);
 
   return (
     <div className="space-y-6">
@@ -87,6 +88,15 @@ export default function AthleteDetailPage() {
           description="Energy levels over the last 24 hours."
           dataKey="Energy"
           unit="%"
+        />
+      </div>
+       <div className="grid grid-cols-1 gap-6">
+        <HistoricalDataChart
+          data={emgData}
+          title="EMG Muscle Activity"
+          description="Electromyography activity over the last 24 hours."
+          dataKey="EMG"
+          unit="mV"
         />
       </div>
     </div>
