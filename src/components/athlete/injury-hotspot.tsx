@@ -1,8 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
+import { Button } from '../ui/button';
+import { RefreshCw } from 'lucide-react';
 
 interface InjuryHotspotProps {
   predictedInjuryPart: string;
@@ -38,7 +40,6 @@ const BodySVG = ({ parts, activePart, risk }: { parts: any[], activePart: string
   </svg>
 );
 
-
 const frontParts = [
     { id: 'front-head', path: "M99.5,16.5c-11.05,0-20,8.95-20,20s8.95,20,20,20s20-8.95,20-20S110.55,16.5,99.5,16.5z", partName: 'Head' },
     { id: 'front-neck', path: "M92.5,56.5h14v10h-14z", partName: 'Neck' },
@@ -73,13 +74,21 @@ const backParts = [
     { id: 'back-right-foot', path: "M101.5,266.5h20v10h-20z", partName: 'Ankle' },
 ];
 
-
 export default function InjuryHotspot({ predictedInjuryPart, injuryRiskPercent, className }: InjuryHotspotProps) {
+  const [view, setView] = useState<'front' | 'back'>('front');
+
+  const toggleView = () => {
+    setView(current => (current === 'front' ? 'back' : 'front'));
+  };
+
   const getRiskColor = () => {
     if (injuryRiskPercent > 60) return 'text-destructive';
     if (injuryRiskPercent > 30) return 'text-orange-500';
     return 'text-green-500';
   };
+
+  const parts = view === 'front' ? frontParts : backParts;
+  const buttonLabel = view === 'front' ? 'F' : 'B';
 
   return (
     <Card className={cn("shadow-md hover:shadow-lg transition-shadow duration-300 h-full", className)}>
@@ -89,20 +98,7 @@ export default function InjuryHotspot({ predictedInjuryPart, injuryRiskPercent, 
       <CardContent className="p-2">
         <div className="grid grid-cols-3 items-center gap-4">
             <div className="col-span-2 h-[400px]">
-                <Tabs defaultValue="front" className="w-full h-full flex flex-col">
-                    <TabsList className="grid w-full grid-cols-2 h-7">
-                        <TabsTrigger value="front" className="py-1 h-full text-xs">Front</TabsTrigger>
-                        <TabsTrigger value="back" className="py-1 h-full text-xs">Back</TabsTrigger>
-                    </TabsList>
-                    <div className="h-full py-2 flex-1">
-                        <TabsContent value="front" className="h-full mt-0">
-                            <BodySVG parts={frontParts} activePart={predictedInjuryPart} risk={injuryRiskPercent} />
-                        </TabsContent>
-                        <TabsContent value="back" className="h-full mt-0">
-                            <BodySVG parts={backParts} activePart={predictedInjuryPart} risk={injuryRiskPercent} />
-                        </TabsContent>
-                    </div>
-                </Tabs>
+                <BodySVG parts={parts} activePart={predictedInjuryPart} risk={injuryRiskPercent} />
             </div>
             <div className="col-span-1 flex flex-col items-center justify-center space-y-4">
                 <div className="text-center">
@@ -115,6 +111,10 @@ export default function InjuryHotspot({ predictedInjuryPart, injuryRiskPercent, 
                         {injuryRiskPercent}%
                     </p>
                 </div>
+                <Button onClick={toggleView} variant="outline" size="icon" className="h-10 w-10 rounded-full">
+                    <RefreshCw className="h-4 w-4 absolute transition-transform duration-300" style={{ transform: view === 'back' ? 'rotateY(180deg)' : 'rotateY(0deg)'}} />
+                    <span className="font-bold">{buttonLabel}</span>
+                </Button>
             </div>
         </div>
       </CardContent>
