@@ -73,7 +73,7 @@ export default function AthleteDashboard() {
 
   return (
     <div className="grid gap-6">
-      <div className="grid grid-cols-1 gap-6">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
         <LiveMetricCard 
           title="Live Blood Pressure"
           value={`${liveMetrics.bloodPressureSystolic}/${liveMetrics.bloodPressureDiastolic} mmHg`}
