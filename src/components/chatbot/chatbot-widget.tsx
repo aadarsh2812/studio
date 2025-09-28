@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { MessageSquare, Send, X, Bot, User, Loader2 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { chat, ChatInput } from '@/ai/flows/chat-flow';
+import { chat } from '@/ai/flows/chat-flow';
 import { cn } from '@/lib/utils';
 
 type Message = {
@@ -38,8 +38,7 @@ export default function ChatbotWidget() {
     setIsLoading(true);
 
     try {
-      const chatInput: ChatInput = { history: newMessages };
-      const response = await chat(chatInput);
+      const response = await chat({ history: newMessages });
       const botMessage: Message = { role: 'model', content: response };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
@@ -175,4 +174,3 @@ const AvatarIcon = ({ children }: { children: React.ReactNode }) => (
     {children}
   </div>
 );
-
