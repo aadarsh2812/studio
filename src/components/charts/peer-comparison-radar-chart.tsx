@@ -15,23 +15,42 @@ interface PeerComparisonRadarChartProps {
   data: ComparisonData[];
 }
 
-type VisibleData = {
-  [key: string]: boolean;
-  athlete: boolean;
-  peer: boolean;
-  pro: boolean;
-};
+type DataKey = "athlete" | "peer" | "pro";
 
 export default function PeerComparisonRadarChart({ data }: PeerComparisonRadarChartProps) {
-  const [visible, setVisible] = useState<VisibleData>({ athlete: true, peer: true, pro: true });
+  const [hidden, setHidden] = useState<Record<DataKey, boolean>>({
+    athlete: false,
+    peer: false,
+    pro: false,
+  });
 
-  const toggleVisibility = (dataKey: keyof VisibleData) => {
-    setVisible(prev => ({ ...prev, [dataKey]: !prev[dataKey] }));
+  const toggleSeries = (dataKey: DataKey) => {
+    setHidden(prev => ({ ...prev, [dataKey]: !prev[dataKey] }));
   };
   
-  const handleLegendClick = (e: any) => {
-    toggleVisibility(e.dataKey);
+  const handleLegendClick = (e: { dataKey: DataKey }) => {
+    toggleSeries(e.dataKey);
   }
+
+  const renderLegend = (props: any) => {
+    const { payload } = props;
+    return (
+      <ul className="flex justify-center gap-4">
+        {payload.map((entry: any, index: number) => (
+          <li
+            key={`item-${index}`}
+            onClick={() => handleLegendClick(entry)}
+            className={`flex cursor-pointer items-center gap-2 text-sm ${hidden[entry.dataKey as DataKey] ? 'text-muted-foreground opacity-50' : ''}`}
+          >
+            <svg width="14" height="14" viewBox="0 0 32 32" style={{ fill: entry.color }}>
+              <path d="M0,16h32v-4h-32Z"/>
+            </svg>
+            <span>{entry.value}</span>
+          </li>
+        ))}
+      </ul>
+    );
+  };
 
   return (
     <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
@@ -45,31 +64,34 @@ export default function PeerComparisonRadarChart({ data }: PeerComparisonRadarCh
             <PolarGrid stroke="hsl(var(--border))" />
             <PolarAngleAxis dataKey="subject" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }} />
             <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }} />
-            {visible.athlete && <Radar
+            <Radar
               name="You"
               dataKey="athlete"
               stroke="hsl(var(--chart-1))"
               fill="hsl(var(--chart-1))"
               fillOpacity={0.1}
               strokeWidth={2}
-            />}
-            {visible.peer && <Radar
+              hide={hidden.athlete}
+            />
+            <Radar
               name="Peer Avg"
               dataKey="peer"
               stroke="hsl(var(--chart-2))"
               fill="hsl(var(--chart-2))"
               fillOpacity={0.1}
               strokeWidth={2}
-            />}
-             {visible.pro && <Radar
+              hide={hidden.peer}
+            />
+             <Radar
               name="Pro Avg"
               dataKey="pro"
               stroke="hsl(var(--chart-3))"
               fill="hsl(var(--chart-3))"
               fillOpacity={0.1}
               strokeWidth={2}
-            />}
-            <Legend onClick={handleLegendClick} />
+              hide={hidden.pro}
+            />
+            <Legend content={renderLegend} />
             <Tooltip
               contentStyle={{
                 backgroundColor: 'hsl(var(--card))',
