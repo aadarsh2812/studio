@@ -4,9 +4,18 @@ import { useAuth } from '@/lib/hooks';
 import AthleteDashboard from '@/components/dashboard/athlete-dashboard';
 import CoachDashboard from '@/components/dashboard/coach-dashboard';
 import PhysiotherapistDashboard from '@/components/dashboard/physiotherapist-dashboard';
+import { Loader2 } from 'lucide-react';
 
 function DashboardView() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+       <div className="flex h-64 w-full items-center justify-center bg-background">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+      </div>
+    )
+  }
 
   if (!user) return null;
 
