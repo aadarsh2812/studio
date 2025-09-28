@@ -72,28 +72,29 @@ export default function AthleteDashboard() {
 
   return (
     <div className="grid gap-6">
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-        <LiveMetricCard 
-          title="Live Blood Pressure"
-          value={`${liveMetrics.bloodPressureSystolic}/${liveMetrics.bloodPressureDiastolic} mmHg`}
-          description="Your current blood pressure"
-          Icon={HeartPulse}
-          colorClassName="text-red-500"
-          className="col-span-1"
-        />
-        <LiveMetricCard 
-          title="Stress Level"
-          value={`${liveMetrics.stress}%`}
-          description="Physiological stress index"
-          Icon={Zap}
-          colorClassName="text-yellow-500"
-           className="col-span-1"
-        />
-        <InjuryHotspot
-          predictedInjuryPart={athleteData.predictedInjuryPart}
-          injuryRiskPercent={athleteData.injuryRiskPercent}
-          className="col-span-1"
-        />
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="lg:col-span-1 flex flex-col gap-6">
+            <LiveMetricCard 
+              title="Live Blood Pressure"
+              value={`${liveMetrics.bloodPressureSystolic}/${liveMetrics.bloodPressureDiastolic} mmHg`}
+              description="Your current blood pressure"
+              Icon={HeartPulse}
+              colorClassName="text-red-500"
+            />
+            <LiveMetricCard 
+              title="Stress Level"
+              value={`${liveMetrics.stress}%`}
+              description="Physiological stress index"
+              Icon={Zap}
+              colorClassName="text-yellow-500"
+            />
+        </div>
+        <div className="lg:col-span-2">
+            <InjuryHotspot
+              predictedInjuryPart={athleteData.predictedInjuryPart}
+              injuryRiskPercent={athleteData.injuryRiskPercent}
+            />
+        </div>
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <PeerComparisonRadarChart 

@@ -11,7 +11,7 @@ interface InjuryHotspotProps {
 }
 
 const BodyPart = ({ id, path, partName, activePart, risk }: { id: string; path: string; partName: string; activePart: string; risk: number }) => {
-  const isActive = partName.toLowerCase() === activePart.toLowerCase();
+  const isActive = partName.toLowerCase().includes(activePart.toLowerCase()) || activePart.toLowerCase().includes(partName.toLowerCase());
   const colorClass = risk > 60 ? 'fill-destructive/70' : 'fill-orange-500/70';
   
   return (
@@ -19,14 +19,14 @@ const BodyPart = ({ id, path, partName, activePart, risk }: { id: string; path: 
       id={id}
       d={path}
       className={cn(
-        'fill-muted-foreground/20 transition-colors duration-300',
+        'fill-muted-foreground/20 transition-colors duration-300 stroke-background stroke-2',
         isActive && colorClass
       )}
     />
   );
 };
 
-const BodySVG = ({ parts, activePart, risk, isFront = true }: { parts: any[], activePart: string, risk: number, isFront?: boolean }) => (
+const BodySVG = ({ parts, activePart, risk }: { parts: any[], activePart: string, risk: number }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 200 400"
@@ -40,37 +40,37 @@ const BodySVG = ({ parts, activePart, risk, isFront = true }: { parts: any[], ac
 
 
 const frontParts = [
-    { id: 'front-head', path: 'M85,30 A20,20 0 1,1 115,30 L115,50 L85,50 Z', partName: 'Head' },
-    { id: 'front-neck', path: 'M90,50 h20 v10 h-20 z', partName: 'Neck' },
-    { id: 'front-torso', path: 'M70,60 h60 v80 h-60 z', partName: 'Torso' },
-    { id: 'front-left-arm', path: 'M50,60 h20 v80 h-20 z', partName: 'Left Arm' },
-    { id: 'front-right-arm', path: 'M130,60 h20 v80 h-20 z', partName: 'Right Arm' },
-    { id: 'front-left-shoulder', path: 'M70,60 A20,20 0 0,0 50,60', partName: 'Shoulder'},
-    { id: 'front-right-shoulder', path: 'M130,60 A20,20 0 0,1 150,60', partName: 'Shoulder'},
-    { id: 'front-left-leg', path: 'M70,140 h25 v120 h-25 z', partName: 'Left Leg' },
-    { id: 'front-right-leg', path: 'M105,140 h25 v120 h-25 z', partName: 'Right Leg' },
-    { id: 'front-left-knee', path: 'M70,200 h25 v30 h-25 z', partName: 'Knee' },
-    { id: 'front-right-knee', path: 'M105,200 h25 v30 h-25 z', partName: 'Knee' },
-    { id: 'front-left-ankle', path: 'M70,250 h25 v10 h-25 z', partName: 'Ankle' },
-    { id: 'front-right-ankle', path: 'M105,250 h25 v10 h-25 z', partName: 'Ankle' },
+    { id: 'front-head', path: "M99.5,16.5c-11.05,0-20,8.95-20,20s8.95,20,20,20s20-8.95,20-20S110.55,16.5,99.5,16.5z", partName: 'Head' },
+    { id: 'front-neck', path: "M92.5,56.5h14v10h-14z", partName: 'Neck' },
+    { id: 'front-left-shoulder', path: "M77.5,66.5c-5.52,0-10,4.48-10,10v5h-10v-5c0-8.28,6.72-15,15-15h5z", partName: 'Shoulder'},
+    { id: 'front-right-shoulder', path: "M121.5,66.5c5.52,0,10,4.48,10,10v5h10v-5c0-8.28-6.72-15-15-15h-5z", partName: 'Shoulder'},
+    { id: 'front-torso', path: "M77.5,66.5h44v90h-44z", partName: 'Torso' },
+    { id: 'front-left-arm', path: "M52.5,76.5h15v80h-15z", partName: 'Left Arm' },
+    { id: 'front-right-arm', path: "M131.5,76.5h15v80h-15z", partName: 'Right Arm' },
+    { id: 'front-left-leg', path: "M77.5,156.5h20v110h-20z", partName: 'Left Leg' },
+    { id: 'front-right-leg', path: "M101.5,156.5h20v110h-20z", partName: 'Right Leg' },
+    { id: 'front-left-knee', path: "M77.5,216.5h20v30h-20z", partName: 'Knee' },
+    { id: 'front-right-knee', path: "M101.5,216.5h20v30h-20z", partName: 'Knee' },
+    { id: 'front-left-foot', path: "M77.5,266.5h20v10h-20z", partName: 'Ankle' },
+    { id: 'front-right-foot', path: "M101.5,266.5h20v10h-20z", partName: 'Ankle' },
 ];
 
 const backParts = [
-    { id: 'back-head', path: 'M85,30 A20,20 0 1,1 115,30 L115,50 L85,50 Z', partName: 'Head' },
-    { id: 'back-neck', path: 'M90,50 h20 v10 h-20 z', partName: 'Neck' },
-    { id: 'back-torso', path: 'M70,60 h60 v80 h-60 z', partName: 'Back' },
-    { id: 'back-left-arm', path: 'M50,60 h20 v80 h-20 z', partName: 'Left Arm' },
-    { id: 'back-right-arm', path: 'M130,60 h20 v80 h-20 z', partName: 'Right Arm' },
-    { id: 'back-left-shoulder', path: 'M70,60 A20,20 0 0,0 50,60', partName: 'Shoulder'},
-    { id: 'back-right-shoulder', path: 'M130,60 A20,20 0 0,1 150,60', partName: 'Shoulder'},
-    { id: 'back-left-leg', path: 'M70,140 h25 v120 h-25 z', partName: 'Left Leg' },
-    { id: 'back-right-leg', path: 'M105,140 h25 v120 h-25 z', partName: 'Right Leg' },
-    { id: 'back-left-hamstring', path: 'M70,140 h25 v50 h-25 z', partName: 'Hamstring' },
-    { id: 'back-right-hamstring', path: 'M105,140 h25 v50 h-25 z', partName: 'Hamstring' },
-    { id: 'back-left-knee', path: 'M70,200 h25 v30 h-25 z', partName: 'Knee' },
-    { id: 'back-right-knee', path: 'M105,200 h25 v30 h-25 z', partName: 'Knee' },
-    { id: 'back-left-ankle', path: 'M70,250 h25 v10 h-25 z', partName: 'Ankle' },
-    { id: 'back-right-ankle', path: 'M105,250 h25 v10 h-25 z', partName: 'Ankle' },
+    { id: 'back-head', path: "M99.5,16.5c-11.05,0-20,8.95-20,20s8.95,20,20,20s20-8.95,20-20S110.55,16.5,99.5,16.5z", partName: 'Head' },
+    { id: 'back-neck', path: "M92.5,56.5h14v10h-14z", partName: 'Neck' },
+    { id: 'back-left-shoulder', path: "M77.5,66.5c-5.52,0-10,4.48-10,10v5h-10v-5c0-8.28,6.72-15,15-15h5z", partName: 'Shoulder'},
+    { id: 'back-right-shoulder', path: "M121.5,66.5c5.52,0,10,4.48,10,10v5h10v-5c0-8.28-6.72-15-15-15h-5z", partName: 'Shoulder'},
+    { id: 'back-torso', path: "M77.5,66.5h44v90h-44z", partName: 'Back' },
+    { id: 'back-left-arm', path: "M52.5,76.5h15v80h-15z", partName: 'Left Arm' },
+    { id: 'back-right-arm', path: "M131.5,76.5h15v80h-15z", partName: 'Right Arm' },
+    { id: 'back-left-leg', path: "M77.5,156.5h20v110h-20z", partName: 'Left Leg' },
+    { id: 'back-right-leg', path: "M101.5,156.5h20v110h-20z", partName: 'Right Leg' },
+    { id: 'back-left-hamstring', path: "M77.5,186.5h20v50h-20z", partName: 'Hamstring' },
+    { id: 'back-right-hamstring', path: "M101.5,186.5h20v50h-20z", partName: 'Hamstring' },
+    { id: 'back-left-knee', path: "M77.5,216.5h20v30h-20z", partName: 'Knee' },
+    { id: 'back-right-knee', path: "M101.5,216.5h20v30h-20z", partName: 'Knee' },
+    { id: 'back-left-foot', path: "M77.5,266.5h20v10h-20z", partName: 'Ankle' },
+    { id: 'back-right-foot', path: "M101.5,266.5h20v10h-20z", partName: 'Ankle' },
 ];
 
 
@@ -84,35 +84,39 @@ export default function InjuryHotspot({ predictedInjuryPart, injuryRiskPercent, 
   return (
     <Card className={cn("shadow-md hover:shadow-lg transition-shadow duration-300 h-full", className)}>
       <CardHeader className="pb-2">
-        <CardTitle className="text-sm font-medium">Injury Hotspot</CardTitle>
+        <CardTitle className="text-base font-semibold">Injury Hotspot</CardTitle>
       </CardHeader>
       <CardContent className="p-2">
-        <div className="flex items-center justify-between px-4 pb-2">
-            <div className="flex flex-col">
-                 <span className="text-xs text-muted-foreground">Highest Risk Area</span>
-                <span className="font-bold text-base">{predictedInjuryPart}</span>
+        <div className="grid grid-cols-3 items-center gap-4">
+            <div className="col-span-2 h-[250px]">
+                <Tabs defaultValue="front" className="w-full h-full">
+                    <TabsList className="grid w-full grid-cols-2">
+                        <TabsTrigger value="front">Front</TabsTrigger>
+                        <TabsTrigger value="back">Back</TabsTrigger>
+                    </TabsList>
+                    <div className="h-full py-2">
+                        <TabsContent value="front" className="h-full">
+                            <BodySVG parts={frontParts} activePart={predictedInjuryPart} risk={injuryRiskPercent} />
+                        </TabsContent>
+                        <TabsContent value="back" className="h-full">
+                            <BodySVG parts={backParts} activePart={predictedInjuryPart} risk={injuryRiskPercent} />
+                        </TabsContent>
+                    </div>
+                </Tabs>
             </div>
-            <div className="flex flex-col items-end">
-                <span className="text-xs text-muted-foreground">Risk Level</span>
-                 <span className={cn("text-4xl font-bold font-headline", getRiskColor())}>
-                    {injuryRiskPercent}%
-                </span>
+            <div className="col-span-1 flex flex-col items-center justify-center space-y-4">
+                <div className="text-center">
+                    <span className="text-xs text-muted-foreground">Highest Risk Area</span>
+                    <p className="font-bold text-lg">{predictedInjuryPart}</p>
+                </div>
+                <div className="text-center">
+                    <span className="text-xs text-muted-foreground">Risk Level</span>
+                    <p className={cn("text-5xl font-bold font-headline", getRiskColor())}>
+                        {injuryRiskPercent}%
+                    </p>
+                </div>
             </div>
         </div>
-        <Tabs defaultValue="front" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="front">Front</TabsTrigger>
-            <TabsTrigger value="back">Back</TabsTrigger>
-          </TabsList>
-          <div className="h-40">
-            <TabsContent value="front" className="h-full">
-                <BodySVG parts={frontParts} activePart={predictedInjuryPart} risk={injuryRiskPercent} />
-            </TabsContent>
-            <TabsContent value="back" className="h-full">
-                <BodySVG parts={backParts} activePart={predictedInjuryPart} risk={injuryRiskPercent} isFront={false} />
-            </TabsContent>
-          </div>
-        </Tabs>
       </CardContent>
     </Card>
   );
