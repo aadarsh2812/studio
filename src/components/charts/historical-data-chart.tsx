@@ -1,6 +1,6 @@
 'use client';
 
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
@@ -15,9 +15,10 @@ interface HistoricalDataChartProps {
   description: string;
   dataKey: string;
   unit: string;
+  lineType?: "monotone" | "linear";
 }
 
-export default function HistoricalDataChart({ data, title, description, dataKey, unit }: HistoricalDataChartProps) {
+export default function HistoricalDataChart({ data, title, description, dataKey, unit, lineType = "monotone" }: HistoricalDataChartProps) {
   return (
     <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -38,7 +39,7 @@ export default function HistoricalDataChart({ data, title, description, dataKey,
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={350}>
-          <LineChart
+          <AreaChart
             data={data}
             margin={{
               top: 5,
@@ -63,8 +64,8 @@ export default function HistoricalDataChart({ data, title, description, dataKey,
                 borderRadius: 'var(--radius)',
               }}
             />
-            <Line
-              type="monotone"
+            <Area
+              type={lineType}
               dataKey="value"
               name={dataKey}
               stroke="hsl(var(--primary))"
@@ -73,7 +74,7 @@ export default function HistoricalDataChart({ data, title, description, dataKey,
               activeDot={{ r: 8 }}
               fill="url(#line-gradient)"
             />
-          </LineChart>
+          </AreaChart>
         </ResponsiveContainer>
       </CardContent>
     </Card>

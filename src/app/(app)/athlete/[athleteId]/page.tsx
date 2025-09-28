@@ -81,6 +81,7 @@ export default function AthleteDetailPage() {
           description="Heart rate over the last 24 hours."
           dataKey="Heart Rate"
           unit="bpm"
+          lineType="linear"
         />
         <HistoricalDataChart
           data={energyData}
@@ -97,6 +98,7 @@ export default function AthleteDetailPage() {
           description="Electromyography activity over the last 24 hours."
           dataKey="EMG"
           unit="mV"
+          lineType="linear"
         />
       </div>
     </div>
