@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { UserNav } from '@/components/layout/user-nav';
 import { SidebarNav } from '@/components/layout/sidebar-nav';
 import { Dumbbell } from 'lucide-react';
+import ChatbotWidget from '@/components/chatbot/chatbot-widget';
 
 export default function AppLayout({
   children,
@@ -55,6 +56,7 @@ export default function AppLayout({
           <UserNav />
         </header>
         <main className="flex-1 p-4 sm:p-6">{children}</main>
+        <ChatbotWidget />
       </SidebarInset>
     </SidebarProvider>
   );
