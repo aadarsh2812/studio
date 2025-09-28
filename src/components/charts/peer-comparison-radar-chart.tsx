@@ -85,8 +85,8 @@ export default function PeerComparisonRadarChart({ data }: PeerComparisonRadarCh
              <Radar
               name="Pro Avg"
               dataKey="pro"
-              stroke="hsl(var(--chart-3))"
-              fill="hsl(var(--chart-3))"
+              stroke="hsl(var(--chart-4))"
+              fill="hsl(var(--chart-4))"
               fillOpacity={0.1}
               strokeWidth={2}
               hide={hidden.pro}
