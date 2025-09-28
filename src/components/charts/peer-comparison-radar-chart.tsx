@@ -13,11 +13,12 @@ interface ComparisonData {
 
 interface PeerComparisonRadarChartProps {
   data: ComparisonData[];
+  proName?: string;
 }
 
 type DataKey = "athlete" | "peer" | "pro";
 
-export default function PeerComparisonRadarChart({ data }: PeerComparisonRadarChartProps) {
+export default function PeerComparisonRadarChart({ data, proName }: PeerComparisonRadarChartProps) {
   const [hidden, setHidden] = useState<Record<DataKey, boolean>>({
     athlete: false,
     peer: false,
@@ -36,18 +37,24 @@ export default function PeerComparisonRadarChart({ data }: PeerComparisonRadarCh
     const { payload } = props;
     return (
       <ul className="flex justify-center gap-4">
-        {payload.map((entry: any, index: number) => (
-          <li
-            key={`item-${index}`}
-            onClick={() => handleLegendClick(entry)}
-            className={`flex cursor-pointer items-center gap-2 text-sm ${hidden[entry.dataKey as DataKey] ? 'text-muted-foreground opacity-50' : ''}`}
-          >
-            <svg width="14" height="14" viewBox="0 0 32 32" style={{ fill: entry.color }}>
-              <path d="M0,16h32v-4h-32Z"/>
-            </svg>
-            <span>{entry.value}</span>
-          </li>
-        ))}
+        {payload.map((entry: any, index: number) => {
+          let value = entry.value;
+          if (entry.dataKey === 'pro') {
+            value = proName ? proName : 'Pro Avg';
+          }
+          return (
+            <li
+              key={`item-${index}`}
+              onClick={() => handleLegendClick(entry)}
+              className={`flex cursor-pointer items-center gap-2 text-sm ${hidden[entry.dataKey as DataKey] ? 'text-muted-foreground opacity-50' : ''}`}
+            >
+              <svg width="14" height="14" viewBox="0 0 32 32" style={{ fill: entry.color }}>
+                <path d="M0,16h32v-4h-32Z"/>
+              </svg>
+              <span>{value}</span>
+            </li>
+          );
+        })}
       </ul>
     );
   };
@@ -56,7 +63,7 @@ export default function PeerComparisonRadarChart({ data }: PeerComparisonRadarCh
     <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
       <CardHeader>
         <CardTitle>Peer & Pro Comparison</CardTitle>
-        <CardDescription>Your scores vs. average peers and top professionals.</CardDescription>
+        <CardDescription>Your scores vs. peers and a selected pro or teammate.</CardDescription>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={350}>

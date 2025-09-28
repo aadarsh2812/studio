@@ -120,5 +120,8 @@ export const mockAnalysisResults: AnalysisResult[] = [
 ];
 
 export const getMockUserByRole = (role: UserRole): User | undefined => {
+  if (role === 'athlete') {
+    return mockUsers.find(u => u.uid === 'athlete-1');
+  }
   return mockUsers.find(u => u.role === role);
 }
