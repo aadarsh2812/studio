@@ -27,32 +27,27 @@ export async function chat(input: ChatInput): Promise<ChatOutput> {
   return chatFlow(input);
 }
 
-const chatPrompt = ai.definePrompt({
-  name: 'chatPrompt',
-  input: {schema: ChatInputSchema},
-  output: {schema: ChatOutputSchema},
-  prompt: `You are a helpful AI assistant named "Athlete Sentinel Assistant". Your role is to help users understand their athletic performance data.
-
-Your responses should be concise, informative, and encouraging.
-
-Here is the chat history:
-{{#each history}}
-{{role}}: {{content}}
-{{/each}}
-`,
-});
-
 const chatFlow = ai.defineFlow(
   {
     name: 'chatFlow',
     inputSchema: ChatInputSchema,
     outputSchema: ChatOutputSchema,
   },
-  async input => {
-    const {output} = await chatPrompt(input);
-    if (output === null) {
+  async ({ history }) => {
+    const { output, usage } = await ai.generate({
+      model: 'googleai/gemini-pro',
+      prompt: {
+        history: history,
+        // The last message is the new user query
+        // The history format provided by the client is already correct
+      },
+      system: `You are a helpful AI assistant named "Athlete Sentinel Assistant". Your role is to help users understand their athletic performance data. Your responses should be concise, informative, and encouraging.`,
+    });
+
+    if (!output) {
       return "I'm sorry, I don't have a response for that. Can I help with anything else?";
     }
-    return output;
+
+    return output.text;
   }
 );
