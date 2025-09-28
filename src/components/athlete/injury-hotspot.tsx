@@ -94,9 +94,9 @@ export default function InjuryHotspot({ predictedInjuryPart, injuryRiskPercent, 
       <CardHeader className="pb-2">
         <CardTitle className="text-base font-semibold">Injury Hotspot</CardTitle>
       </CardHeader>
-      <CardContent className="p-2">
-        <div className="grid grid-cols-3 items-center gap-4">
-            <div className="col-span-2 h-[400px]">
+      <CardContent className="p-2 h-full">
+        <div className="grid grid-cols-3 items-center gap-4 h-full">
+            <div className="col-span-2 h-full flex items-center justify-center">
                 <BodySVG parts={parts} activePart={predictedInjuryPart} risk={injuryRiskPercent} />
             </div>
             <div className="col-span-1 flex flex-col items-center justify-center space-y-4">
