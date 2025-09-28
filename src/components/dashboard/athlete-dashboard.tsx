@@ -1,7 +1,6 @@
 'use client';
 
 import LiveMetricCard from './live-metric-card';
-import ReadinessRadarChart from '../charts/readiness-radar-chart';
 import PeerComparisonRadarChart from '../charts/peer-comparison-radar-chart';
 import HistoricalDataChart from '../charts/historical-data-chart';
 import { HeartPulse, ShieldAlert, Zap, Users } from 'lucide-react';
@@ -59,15 +58,6 @@ export default function AthleteDashboard() {
   };
   
   const proData = selectedPro ? mockAnalysisResults.find(r => r.athleteId === selectedPro.uid) : null;
-
-
-  const readinessData = [
-    { subject: 'Fitness', score: athleteData.fitnessScore, fullMark: 100 },
-    { subject: 'Stamina', score: athleteData.staminaScore, fullMark: 100 },
-    { subject: 'Strength', score: athleteData.strengthScore, fullMark: 100 },
-    { subject: 'Reflex', score: athleteData.reflexScore, fullMark: 100 },
-    { subject: 'Neural', score: athleteData.neuralScore, fullMark: 100 },
-  ];
 
   const comparisonData = [
     { subject: 'Fitness', athlete: athleteData.fitnessScore, peer: 78, pro: proData?.fitnessScore ?? 95 },
@@ -131,7 +121,6 @@ export default function AthleteDashboard() {
         <div/>
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <ReadinessRadarChart data={readinessData} />
         <PeerComparisonRadarChart data={comparisonData} proName={selectedPro?.displayName} />
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
