@@ -111,6 +111,8 @@ export default function AthleteDashboard() {
           unit="bpm"
           lineType="linear"
         />
+      </div>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <HistoricalDataChart
           data={oxygenData}
           title="Blood Oxygen (SpO2)"

@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
-import { RefreshCw } from 'lucide-react';
 
 interface InjuryHotspotProps {
   predictedInjuryPart: string;
@@ -112,7 +111,6 @@ export default function InjuryHotspot({ predictedInjuryPart, injuryRiskPercent, 
                     </p>
                 </div>
                 <Button onClick={toggleView} variant="outline" size="icon" className="h-10 w-10 rounded-full">
-                    <RefreshCw className="h-4 w-4 absolute transition-transform duration-300" style={{ transform: view === 'back' ? 'rotateY(180deg)' : 'rotateY(0deg)'}} />
                     <span className="font-bold">{buttonLabel}</span>
                 </Button>
             </div>
