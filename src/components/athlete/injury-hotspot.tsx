@@ -99,7 +99,7 @@ export default function InjuryHotspot({ predictedInjuryPart, injuryRiskPercent, 
             <div className="col-span-2 h-[350px] flex items-center justify-center">
                 <BodySVG parts={parts} activePart={predictedInjuryPart} risk={injuryRiskPercent} />
             </div>
-            <div className="col-span-1 flex flex-col items-center justify-around space-y-4 h-full">
+            <div className="col-span-1 flex flex-col items-center justify-between h-full py-4">
                 <div className="text-center">
                     <span className="text-xs text-muted-foreground">Highest Risk Area</span>
                     <p className="font-bold text-lg">{predictedInjuryPart}</p>
