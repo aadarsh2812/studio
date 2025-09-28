@@ -50,6 +50,9 @@ const chatFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await chatPrompt(input);
-    return output!;
+    if (output === null) {
+      return "I'm sorry, I don't have a response for that. Can I help with anything else?";
+    }
+    return output;
   }
 );
