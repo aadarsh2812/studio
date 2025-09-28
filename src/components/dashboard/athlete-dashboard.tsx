@@ -73,14 +73,13 @@ export default function AthleteDashboard() {
 
   return (
     <div className="grid gap-6">
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6">
         <LiveMetricCard 
           title="Live Blood Pressure"
           value={`${liveMetrics.bloodPressureSystolic}/${liveMetrics.bloodPressureDiastolic} mmHg`}
           description="Your current blood pressure"
           Icon={HeartPulse}
           colorClassName="text-red-500"
-          className="md:col-span-3"
         />
         <LiveMetricCard 
           title="Stress Level"
@@ -95,7 +94,6 @@ export default function AthleteDashboard() {
           description={`High-risk: ${athleteData.predictedInjuryPart}`}
           Icon={ShieldAlert}
           colorClassName="text-orange-500"
-          className="md:col-span-2"
         />
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
