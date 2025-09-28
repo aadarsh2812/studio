@@ -8,10 +8,10 @@ import { mockAnalysisResults } from '@/lib/mock-data';
 import { useAuth } from '@/lib/hooks';
 import { useState, useEffect } from 'react';
 
-const generateHeartRateData = () => {
+const generateRandomData = (base: number, range: number) => {
   return Array.from({ length: 24 }, (_, i) => ({
     time: `${i}:00`,
-    value: 60 + Math.random() * 40,
+    value: Math.round(base + (Math.random() - 0.5) * range),
   }));
 };
 
@@ -49,7 +49,8 @@ export default function AthleteDashboard() {
     { subject: 'Neural', score: athleteData.neuralScore, fullMark: 100 },
   ];
 
-  const heartRateData = generateHeartRateData();
+  const heartRateData = generateRandomData(70, 40);
+  const emgData = generateRandomData(500, 300);
 
   return (
     <div className="grid gap-6">
@@ -84,6 +85,15 @@ export default function AthleteDashboard() {
           description="Your heart rate over the last 24 hours."
           dataKey="Heart Rate"
           unit="bpm"
+        />
+      </div>
+      <div className="grid grid-cols-1 gap-6">
+        <HistoricalDataChart
+            data={emgData}
+            title="EMG Muscle Activity"
+            description="Electromyography activity over the last 24 hours."
+            dataKey="EMG"
+            unit="mV"
         />
       </div>
     </div>
