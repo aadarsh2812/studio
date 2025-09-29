@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { MessageSquare, Send, X, Bot, User, Loader2 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { chat } from '@/ai/flows/chat-flow';
+// Removed direct import of chat function - now using API route
 import { cn } from '@/lib/utils';
 
 type Message = {
@@ -20,6 +20,7 @@ export default function ChatbotWidget() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   const toggleOpen = () => {
     setIsOpen(prev => !prev);
@@ -38,8 +39,20 @@ export default function ChatbotWidget() {
     setIsLoading(true);
 
     try {
-      const response = await chat({ history: newMessages as any });
-      const botMessage: Message = { role: 'model', content: [{ text: response }] };
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ history: newMessages }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const botMessage: Message = { role: 'model', content: [{ text: data.response }] };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
       console.error('Chat API error:', error);
@@ -52,6 +65,17 @@ export default function ChatbotWidget() {
       setIsLoading(false);
     }
   };
+
+  // Auto-scroll to latest message
+  useEffect(() => {
+    // Delay to allow DOM to render new message
+    const id = setTimeout(() => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }
+    }, 0);
+    return () => clearTimeout(id);
+  }, [messages, isLoading]);
 
   return (
     <>
@@ -138,6 +162,7 @@ export default function ChatbotWidget() {
                             </div>
                         </div>
                     )}
+                    <div ref={scrollRef} />
                   </div>
                 </ScrollArea>
               </CardContent>
