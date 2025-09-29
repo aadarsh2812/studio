@@ -34,13 +34,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = (role: UserRole) => {
-    setLoading(true);
-    const mockUser = getMockUserByRole(role);
-    if (mockUser) {
-      setUser(mockUser);
-      localStorage.setItem('athlete-sentinel-user', JSON.stringify(mockUser));
-    }
-    setLoading(false);
+    // setLoading(true);
+    // const mockUser = getMockUserByRole(role);
+    // if (mockUser) {
+    //   setUser(mockUser);
+    //   localStorage.setItem('athlete-sentinel-user', JSON.stringify(mockUser));
+    // }
+    // setLoading(false);
   };
   
   const switchRole = (role: UserRole) => {

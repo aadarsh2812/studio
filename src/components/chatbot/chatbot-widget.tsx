@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils';
 
 type Message = {
   role: 'user' | 'model';
-  content: string;
+  content: { text: string }[];
 };
 
 export default function ChatbotWidget() {
@@ -31,21 +31,21 @@ export default function ChatbotWidget() {
   const handleSend = async () => {
     if (!input.trim()) return;
 
-    const userMessage: Message = { role: 'user', content: input };
+    const userMessage: Message = { role: 'user', content: [{ text: input }] };
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
     setInput('');
     setIsLoading(true);
 
     try {
-      const response = await chat({ history: newMessages });
-      const botMessage: Message = { role: 'model', content: response };
+      const response = await chat({ history: newMessages as any });
+      const botMessage: Message = { role: 'model', content: [{ text: response }] };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
       console.error('Chat API error:', error);
       const errorMessage: Message = {
         role: 'model',
-        content: "Sorry, I'm having trouble connecting. Please try again later.",
+        content: [{ text: "Sorry, I'm having trouble connecting. Please try again later." }],
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
@@ -119,7 +119,7 @@ export default function ChatbotWidget() {
                               : 'bg-muted'
                           )}
                         >
-                          <p className="text-sm">{message.content}</p>
+                          <p className="text-sm">{message.content[0].text}</p>
                         </div>
                          {message.role === 'user' && (
                            <AvatarIcon>

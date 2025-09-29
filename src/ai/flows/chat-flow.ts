@@ -1,53 +1,45 @@
-'use server';
-/**
- * @fileOverview A conversational chat flow for the Athlete Sentinel assistant.
- *
- * - chat - A function that handles the conversational chat process.
- * - ChatInput - The input type for the chat function.
- * - ChatOutput - The return type for the chat function.
- */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import axios from 'axios';
 
-const ChatInputSchema = z.object({
-  history: z.array(
-    z.object({
-      role: z.enum(['user', 'model']),
-      content: z.string(),
-    })
-  ),
-});
-export type ChatInput = z.infer<typeof ChatInputSchema>;
+export type ChatInput = {
+  history: Array<{
+    role: 'user' | 'model' | 'system',
+    content: { text: string }[]
+  }>
+};
 
-const ChatOutputSchema = z.string();
-export type ChatOutput = z.infer<typeof ChatOutputSchema>;
+export type ChatOutput = string;
 
 export async function chat(input: ChatInput): Promise<ChatOutput> {
-  return chatFlow(input);
-}
+  try {
+    const apiUrl = 'http://localhost:8000/v1/chat/completions';
+    const apiKey = process.env.QWEN3_API_KEY || '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';
+    const systemPrompt = `You are a helpful AI assistant named "Athlete Sentinel Assistant". Your role is to help users understand their athletic performance data, provide training advice, and assist with injury prevention. Your responses should be concise, informative, and encouraging. Always maintain a professional and supportive tone.`;
 
-const chatFlow = ai.defineFlow(
-  {
-    name: 'chatFlow',
-    inputSchema: ChatInputSchema,
-    outputSchema: ChatOutputSchema,
-  },
-  async ({ history }) => {
-    const { output, usage } = await ai.generate({
-      model: 'googleai/gemini-pro',
-      prompt: {
-        history: history,
-        // The last message is the new user query
-        // The history format provided by the client is already correct
-      },
-      system: `You are a helpful AI assistant named "Athlete Sentinel Assistant". Your role is to help users understand their athletic performance data. Your responses should be concise, informative, and encouraging.`,
+    const messages = [
+      { role: 'system', content: systemPrompt },
+      ...input.history.map(msg => ({ role: msg.role, content: msg.content[0].text }))
+    ];
+
+    const response = await axios.post(apiUrl, {
+      model: 'Qwen/Qwen3-Next-80B-A3B-Thinking',
+      messages,
+      max_tokens: 256
+    }, {
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      }
     });
 
-    if (!output) {
-      return "I'm sorry, I don't have a response for that. Can I help with anything else?";
+    const reply = response.data.choices?.[0]?.message?.content || '';
+    return reply;
+  } catch (error: any) {
+    console.error('Qwen3 API error:', error?.response?.data || error?.message);
+    if (error?.response?.status === 503) {
+      return "The Qwen3 AI service is temporarily unavailable (503 error). Please try again in a few minutes.";
     }
-
-    return output.text;
+    return "I apologize, but I'm having trouble processing your request. Please try again later.";
   }
-);
+}
